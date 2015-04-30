@@ -298,6 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
         for (Object db : dbs) {
             cbDatabase.addItem(db);
         }
+        texStatusBar.setText("Logged into: "+mongo.getIP()+" on port "+mongo.getPort());
     }
 
     private String writeToFile(String docs) {

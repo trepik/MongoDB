@@ -104,12 +104,13 @@ public class MongoDB {
         coll = db.getCollection(colName);
         DBObject query = (DBObject) JSON.parse(qString);
         cur = coll.find(query);
-        String data = "";
+        String data = "[";
         try {
             while (cur.hasNext()) {
-                data = data.concat(cur.next().toString());
+                data = data + cur.next().toString() + ",";
             }
         } finally {
+            data = data.substring(0, data.length() - 1) + "]"; 
             cur.close();
         }
         return prettyJSON(data);
@@ -120,6 +121,14 @@ public class MongoDB {
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(ugly);
         return gson.toJson(je);
+    }
+
+    String getIP() {
+        return this.server.getSocketAddress().toString();
+    }
+
+    String getPort() {
+        return Integer.toString(this.server.getPort());
     }
 
 }
